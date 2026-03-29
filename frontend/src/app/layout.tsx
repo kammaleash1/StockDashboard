@@ -20,7 +20,8 @@ function Navbar() {
     if (query.length < 2) { setResults([]); setOpen(false); return }
     const t = setTimeout(async () => {
       try {
-        const res = await fetch(`http://localhost:8000/search?q=${query}`)
+        const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+        const res = await fetch(`${API}/search?q=${query}`)
         const data = await res.json()
         setResults(data.results || [])
         setOpen(true)
