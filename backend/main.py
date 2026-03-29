@@ -7,6 +7,12 @@ from textblob import TextBlob
 import requests
 from datetime import datetime
 import ta
+yf.set_tz_cache_location("/tmp")
+
+session = requests.Session()
+session.headers.update({
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36'
+})
 
 app = FastAPI(title="StockSense API")
 
@@ -150,7 +156,7 @@ def root():
 @app.get("/analyze/{symbol}")
 def analyze(symbol: str):
     try:
-        ticker = yf.Ticker(symbol)
+        ticker = yf.Ticker(symbol, session=session)
         df = ticker.history(period="1y")
         info = ticker.info
         if df.empty:
@@ -190,7 +196,7 @@ def analyze(symbol: str):
 @app.get("/chart/{symbol}")
 def chart(symbol: str, period: str = "6mo"):
     try:
-        ticker = yf.Ticker(symbol)
+        ticker = yf.Ticker(symbol, session=session)
         df = ticker.history(period=period)
         if df.empty:
             raise HTTPException(status_code=404, detail="No data")
@@ -218,7 +224,7 @@ def chart(symbol: str, period: str = "6mo"):
 @app.get("/fundamentals/{symbol}")
 def fundamentals(symbol: str):
     try:
-        info = yf.Ticker(symbol).info
+        info = yf.Ticker(symbol, session=session).info
         return {
             "pe_ratio": safe(info.get("trailingPE")),
             "pb_ratio": safe(info.get("priceToBook")),
