@@ -12,7 +12,7 @@ app = FastAPI(title="StockSense API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000","https://stock-dashboard-i2gdcpo3n-stock-sense.vercel.app","https://stockdashboard-y748.onrender.com","*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
