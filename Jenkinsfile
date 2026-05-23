@@ -19,20 +19,20 @@ pipeline {
                 sh 'docker build -t $BACKEND_IMAGE:latest ./backend'
             }
         }
-
+        /*
         stage('Build Frontend Docker Image') {
             steps {
                 sh 'docker build -t $FRONTEND_IMAGE:latest ./frontend'
             }
         }
-
+        */
         stage('Verify Docker Images') {
             steps {
                 sh 'docker images'
             }
         }
     }
-
+    /*
     post {
         success {
             echo 'StockSense pipeline executed successfully!'
@@ -41,5 +41,5 @@ pipeline {
         failure {
             echo 'Pipeline failed!'
         }
-    }
+    } */
 }
