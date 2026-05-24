@@ -19,20 +19,14 @@ pipeline {
                 sh 'docker build -t $BACKEND_IMAGE:latest ./backend'
             }
         }
-        
+
         stage('Build Frontend Docker Image') {
             steps {
                 sh 'docker build -t $FRONTEND_IMAGE:latest ./frontend'
             }
         }
-        
-        stage('Verify Docker Images') {
-            steps {
-                sh 'docker images'
-            }
-        }
-    	
-    	stage('Docker Hub Login') {
+
+        stage('Docker Hub Login') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-creds',
@@ -44,23 +38,30 @@ pipeline {
                 }
             }
         }
-    stage('Push Backend Image') {
+
+        stage('Push Backend Image') {
             steps {
                 sh 'docker push $BACKEND_IMAGE:latest'
             }
         }
-    stage('Push Frontend Image') {
+
+        stage('Push Frontend Image') {
             steps {
                 sh 'docker push $FRONTEND_IMAGE:latest'
             }
         }
-	}
 
+        stage('Verify Docker Images') {
+            steps {
+                sh 'docker images'
+            }
+        }
+    }
 
-	post {
+    post {
 
         success {
-            echo 'Backend and Frontend images are built and pushed successfully!'
+            echo 'Backend and Frontend images built and pushed successfully!'
         }
 
         failure {
@@ -72,10 +73,3 @@ pipeline {
         }
     }
 }
-
-
-
-
-
-
-
