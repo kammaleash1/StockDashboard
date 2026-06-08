@@ -1,0 +1,38 @@
+
+
+version: '3.9'
+
+services:
+
+  backend:
+    image: kammaleash1/stocksense-backend:latest
+    container_name: stocksense-backend
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./backend:/app
+
+    networks:
+      - stocksense-network
+
+  frontend:
+    image: kammaleash1/stocksense-frontend:latest
+    container_name: stocksense-frontend
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - ./frontend:/app
+
+    networks:
+      - stocksense-network
+
+    depends_on:
+      - backend
+
+networks:
+  stocksense-network:
+    driver: bridge
