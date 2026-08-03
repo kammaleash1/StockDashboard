@@ -20,7 +20,7 @@ COPY . .
  
 # Set backend API URL for the build
 # This tells frontend where to fetch stock data from
-ENV NEXT_PUBLIC_API_URL=http://backend-service:8000
+ENV NEXT_PUBLIC_API_URL=http://localhost:8000
  
 # Build Next.js production app
 RUN npm run build
