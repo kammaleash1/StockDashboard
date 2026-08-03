@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-const API = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:56007'
+const API = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 function fmt(n: number | null) {
   if (n == null) return '—'
